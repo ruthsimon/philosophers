@@ -12,6 +12,21 @@
 
 #include "philo.h"
 
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+}
+
 u_int64_t	get_time(void)
 {
 	struct timeval	tv;
@@ -39,6 +54,8 @@ static int	ft_checkmnumbers(const char *str, long int result, int sign)
 	}
 	return ((int)result * sign);
 }
+
+
 
 int	ft_atoi(const char *str)
 {
@@ -94,13 +111,13 @@ void	ft_exit(t_data *data)
 	i = -1;
 	while (++i < data->nb_philos)
 	{
-		pthread_mutex_destroy(&data->philo->r_fork[i]);
-		pthread_mutex_destroy(&data->philo->l_fork[i]);
+		pthread_mutex_destroy(&data->philo->r_fork_mutex[i]);
+		pthread_mutex_destroy(&data->philo->l_fork_mutex[i]);
 		pthread_mutex_destroy(&data->fork_mutex[i]);
 	}
-	pthread_mutex_destroy(&data->write);
-	pthread_mutex_destroy(&data->lock);
-	pthread_mutex_destroy(&data->philo->lock);
+	pthread_mutex_destroy(&data->print);
+	pthread_mutex_destroy(&data->dead);
+	pthread_mutex_destroy(&data->eat);
 
 
 	free(data);

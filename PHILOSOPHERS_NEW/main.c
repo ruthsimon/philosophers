@@ -32,8 +32,13 @@ int error_msg(char *msg, t_data *data)
 int main(int argc, char **argv)
 {
     if (argc !=5  && argc !=6)
-       write(1,"Wrong num of inputs\n",ft_strlen("Wrong num of inputs\n"));
-    parse(argv);
-    init_data(argc, argv);
+    {
+       ft_putstr_fd("Wrong num of inputs\n",2);
+       return(0);
+    }
    
+    if (!parse(argv))
+        return(0);
+     
+    init_data(argc, argv);
 }
